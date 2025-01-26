@@ -1,24 +1,13 @@
 import streamlit as st
 import requests
 from datetime import datetime
-import geocoder
-
-# Streamlit App Title
+# Streamlit Title
 st.title("🌤 Weather App")
 
 # Sidebar for input
 st.sidebar.title("Options")
 city_input = st.sidebar.text_area("Enter city names (comma separated)")
 
-# Get User Location
-if st.sidebar.button("Detect My Location"):
-    location = geocoder.ip('me')
-    detected_city = location.city
-    st.sidebar.write(f"Your Location: {detected_city}")
-    if detected_city:
-        city_input = detected_city
-
-# OpenWeatherMap API Key
 api_key = "37bb575a48dd55b8171a35e9a2386bca"
 
 @st.cache_data(ttl=600)  # Cache data for 10 minutes
@@ -30,7 +19,7 @@ def get_weather(city):
     else:
         return None
 
-# Multi-city Weather Comparison
+# Multi-city Weather
 if city_input:
     cities = [city.strip() for city in city_input.split(',')]
     for city in cities:
